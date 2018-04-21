@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1">
+    <title>分享demo</title>
+    <style>
+    .btn {
+        display: block;
+        width: 150px;
+        height: 50px;
+        background: red;
+        color: #fff;
+        text-align: center;
+        line-height: 50px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="//open.mobile.qq.com/sdk/qqapi.js"></script>
+</head>
+
+<body>
+    <div class="btn" id="shareWx">微信里调用分享</div>
+    <div class="btn" id="shareqq">QQ里调用分享</div>
+    <div class="btn" id="shareWb">微博分享</div>
+    <div class="btn" id="shareUC">UC浏览器点开分享</div>
+    <script>
+    	var accessToken = '8_Zx_Z1Y0k95JfiaCJBosvTGtBPDDry_sbHcvMjfRmFq6kA7UBAj35aLIO45qnp3P5Bnd8-d65qwo91C--XeOUn-0cWbBEwMIxgKNa-ZG_wRpmKNB8zrjfLo0AD8gO2qDw5DBNE311Z71MmIbNMMDfAJAZZQ';
+    	var ticket = 'kgt8ON7yVITDhtdwci0qeYJpTHtpAKcye45pnHeYPjXf29wCO3N5iiqwPRKX79Gk4hAJSboyWTOC4B1pPxRsyQ';
+    	var noncestr = 'BP2eEu9beH';
+    	var timestamp = '1523857748';
+    	var signature = 'cd920c90768da5afa64f7613e303eb7abf4de02b';
+
+    	var userAgent = navigator.userAgent.toLowerCase();
+    	var isWx = /micromessenger/i.test(userAgent);
+    	var isUC = /ucbrowser/i.test(userAgent);
+    	var isQQBrowser = /mqqbrowser/i.test(userAgent);
+    	var isQQ = /qq/i.test(userAgent) && !isQQBrowser;
+    	alert(userAgent)
+
+	    var oWxBtn = document.getElementById('shareWx');
+	    var oQQBtn = document.getElementById('shareqq');
+	    var oWbBtn = document.getElementById('shareWb');
+	    var oUCBtn = document.getElementById('shareUC');
+
+	    // 微信分享配置
+	    var wxShareConfig = {
+	    	title: '【测试】这里是分享的标题微信',
+	    	desc: '【测试】这里是分享的简介微信',
+	    	link: window.location.href,
+	    	imgUrl: 'http://uwebhtml.s62.uweb.com.cn/test/1.jpeg'
+	    }
+
+	    wx.config({
+	        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	        appId: 'wx8c1e3c14566fe2de', // 必填，公众号的唯一标识
+	        timestamp: timestamp, // 必填，生成签名的时间戳
+	        nonceStr: noncestr, // 必填，生成签名的随机串
+	        signature: signature, // 必填，签名
+	        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone'] // 必填，需要使用的JS接口列表
+	    })
+
+    	if (isWx) {
+    		wx.ready(function () {
+	    		wx.onMenuShareTimeline(wxShareConfig);
+	    		wx.onMenuShareAppMessage(wxShareConfig);
+	    		wx.onMenuShareQQ(wxShareConfig);
+	    		wx.onMenuShareQZone(wxShareConfig);
+    		})
+    	}
+
+	    oWxBtn.onclick = function() {
+	    	if (isWx) {
+	    		alert('请点击右上角按钮进行分享');
+	    	}
+	    }
+
+	    // QQ分享配置
+	    var qqShareConfig = {
+	    	title: '【测试】这里是分享的标题QQ', 
+	    	desc: '【测试】这里是分享的简介QQ', 
+	    	image_url: 'http://uwebhtml.s62.uweb.com.cn/test/1.jpeg', 
+	    	share_url: window.location.href
+	    }
+	    mqq.data.setShareInfo(qqShareConfig, function () {
+	    	alert('设置QQ分享信息成功')
+	    });
+	    
+	    oQQBtn.onclick = function() {
+	    	mqq.ui.showShareMenu();
+	    }
+
+	    // 微博分享
+	    var wbShareConfig = {
+	    	title: '【测试】这里是分享的标题微博', 
+	    	image_url: 'http://uwebhtml.s62.uweb.com.cn/test/1.jpeg', 
+	    	share_url: window.location.href
+	    }
+	    oWbBtn.onclick = function() {
+	    	location.replace('https://service.weibo.com/share/share.php?url=' + encodeURIComponent(wbShareConfig.share_url) + '&title=' + wbShareConfig.title + '&pic=' + wbShareConfig.image_url)
+	    }
+
+	    // UC浏览器点击打开分享
+	    oUCBtn.onclick = function() {
+	    	
+	    }
+    </script>
+</body>
+
+</html>
