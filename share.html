@@ -20,6 +20,7 @@
     </style>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="//open.mobile.qq.com/sdk/qqapi.js"></script>
+    <script src="//jsapi.qq.com/get?api=app.share"></script>
 </head>
 
 <body>
@@ -27,17 +28,25 @@
     <div class="btn" id="shareqq">QQ里调用分享</div>
     <div class="btn" id="shareWb">微博分享</div>
     <div class="btn" id="shareUC">UC浏览器点开分享</div>
+    <div class="btn" id="shareQQAPP">QQ浏览器点开分享</div>
     <script>
-    	var accessToken = '8_Zx_Z1Y0k95JfiaCJBosvTGtBPDDry_sbHcvMjfRmFq6kA7UBAj35aLIO45qnp3P5Bnd8-d65qwo91C--XeOUn-0cWbBEwMIxgKNa-ZG_wRpmKNB8zrjfLo0AD8gO2qDw5DBNE311Z71MmIbNMMDfAJAZZQ';
-    	var ticket = 'kgt8ON7yVITDhtdwci0qeYJpTHtpAKcye45pnHeYPjXf29wCO3N5iiqwPRKX79Gk4hAJSboyWTOC4B1pPxRsyQ';
-    	var noncestr = 'BP2eEu9beH';
-    	var timestamp = '1523857748';
-    	var signature = 'cd920c90768da5afa64f7613e303eb7abf4de02b';
+    	var accessToken = '9_OczDbTPgThfntIzxEOpq0wZi68BmJVuehj0_rQVy8kyNZpSZNgBb0-eE1dazUDNTNrB-6U5L8zXOkDcKaah2T5i3gHzdeGPdLSGIhXTe4AO_MikaU9A0qnirgLRM9UnfB6K8Hna3qsp92j6kGVRiACAYNJ';
+    	var ticket = 'kgt8ON7yVITDhtdwci0qeYJpTHtpAKcye45pnHeYPjXd-Y5im4rjId9Hol2dcOwzzybIU5YuiU0yf34q09tH1w';
+    	var noncestr = 'a3AhK5DmsZ';
+    	var timestamp = '1526696622';
+    	var signature = 'a1be5408e6473b06ee3b1e6532b35d05c9f73e9e';
 
     	var userAgent = navigator.userAgent.toLowerCase();
+    	// 微信内
     	var isWx = /micromessenger/i.test(userAgent);
+
+    	// UC浏览器
     	var isUC = /ucbrowser/i.test(userAgent);
+
+    	// QQ浏览器
     	var isQQBrowser = /mqqbrowser/i.test(userAgent);
+
+    	// QQ
     	var isQQ = /qq/i.test(userAgent) && !isQQBrowser;
     	alert(userAgent)
 
@@ -45,6 +54,7 @@
 	    var oQQBtn = document.getElementById('shareqq');
 	    var oWbBtn = document.getElementById('shareWb');
 	    var oUCBtn = document.getElementById('shareUC');
+	    var oQQBrowserBtn = document.getElementById('shareQQAPP');
 
 	    // 微信分享配置
 	    var wxShareConfig = {
@@ -106,6 +116,18 @@
 	    // UC浏览器点击打开分享
 	    oUCBtn.onclick = function() {
 	    	
+	    }
+
+	    // QQ浏览器点开分享
+	    oQQBrowserBtn.onclick = function () {
+	    	browser.app.share({
+	    	    title: wxShareConfig.title,
+	    	    description: wxShareConfig.desc,
+	    	    url: wxShareConfig.link,
+	    	    img_url: wxShareConfig.imgUrl,
+	    	    from: '测试软件',
+	    	    to_app: undefined
+	    	});
 	    }
     </script>
 </body>
