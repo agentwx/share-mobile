@@ -115,7 +115,32 @@
 
 	    // UC浏览器点击打开分享
 	    oUCBtn.onclick = function() {
-	    	
+	    	var UCshare = {
+	    	    title: '【测试】这里是分享的标题',
+	    	    desc: '从UC分享',
+	    	    image_url: 'http://uwebhtml.s62.uweb.com.cn/test/1.jpeg',
+	    	    share_url: window.location.href
+	    	};
+	    	var isiOS = /(iPhone|iPad|iPod)/.test(navigator.userAgent);  // 判断应用平台
+	    	alert(isiOS)
+	    	if (isiOS) {
+	    	    if (ucbrowser.web_shareEX) {
+	    	        ucbrowser.web_shareEX(
+	    	            JSON.stringify({
+	    	                title: UCshare.title,
+	    	                content: UCshare.desc,
+	    	                sourceUrl: UCshare.share_url,
+	    	                imageUrl: UCshare.image_url,
+	    	                source: '测试咯',
+	    	                target: undefined
+	    	            })
+	    	        )
+	    	    } else {
+	    	        ucbrowser.web_share(UCshare.title, UCshare.desc, UCshare.share_url, undefined, '', '测试咯', UCshare.image_url);
+	    	    }
+	    	}
+	    	else ucweb.startRequest('shell.page_share', [UCshare.title, UCshare.desc, UCshare.share_url, '', '', '测试咯', UCshare.image_url]);
+
 	    }
 
 	    // QQ浏览器点开分享
