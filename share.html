@@ -132,11 +132,11 @@
 	    	                sourceUrl: UCshare.share_url,
 	    	                imageUrl: UCshare.image_url,
 	    	                source: '测试咯',
-	    	                target: undefined
+	    	                target: ''
 	    	            })
 	    	        )
 	    	    } else {
-	    	        ucbrowser.web_share(UCshare.title, UCshare.desc, UCshare.share_url, undefined, '', '测试咯', UCshare.image_url);
+	    	        ucbrowser.web_share(UCshare.title, UCshare.desc, UCshare.share_url, '', '', '测试咯', UCshare.image_url);
 	    	    }
 	    	}
 	    	else ucweb.startRequest('shell.page_share', [UCshare.title, UCshare.desc, UCshare.share_url, '', '', '测试咯', UCshare.image_url]);
